@@ -20,7 +20,7 @@ func main(){
 	for true { //main loop
 		gfx()
 		update()
-		time.Sleep(1 * time.Second)
+		time.Sleep(100 * time.Millisecond)
 	}
 }
 
@@ -69,6 +69,9 @@ func checkNeighbors(x,y int) bool{
 	counter :=0
 	for yd:=-1; yd<=1; yd++{
 		for xd:=-1; xd<=1; xd++{
+			if xd==0 && yd==0{
+				continue
+			} 
 			if grid[x+xd][y+yd] {
 				counter++
 			}
