@@ -17,25 +17,34 @@ var newGrid[WIDTH][HEIGHT]bool = [WIDTH][HEIGHT]bool{}
 func main(){
 	for true { //main loop
 		update()
-		fmt.Print("\033[H\033[2J")
-		for y:=0; y<HEIGHT; y++ { //grid
-			for x:=0; x<WIDTH; x++ {
-				fmt.Printf("%c ",'#')
-			}
-			fmt.Print("\n")
-		}
+		gfx()
 		time.Sleep(1 * time.Second)
 	}
 }
 
-func update(){
+func gfx(){
+	fmt.Print("\033[H\033[2J")
+	var ch rune
+		for y:=1; y<HEIGHT-1; y++ { //grid
+			for x:=1; x<WIDTH-1; x++ {
+				if grid[x][y] {
+					ch='@'
+				}else { 
+					ch=' '
+				}
+				fmt.Printf("%c ",ch)
+			}
+			fmt.Print("\n")
+		}
+}
 
-	for y:=0; y<HEIGHT; y++{
-		for x:=0; x<WIDTH; x++{
-			
+func update(){
+	for y:=1; y<HEIGHT-1; y++{ //border (y<0 || y==HEIGHT) Border is always false
+		for x:=1; x<WIDTH-1; x++{ //border (x<0 || x==HEIGHT)
+			newGrid[x][y] = checkNeighbors(x,y)
 		}
 	}
-	return
+	grid = newGrid
 }
 
 func checkNeighbors(x,y int) bool{
